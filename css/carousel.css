@@ -1,0 +1,32 @@
+* { box-sizing: border-box; }
+
+* { box-sizing: border-box; }
+
+.carousel {
+    margin-top: 3vw;
+    background: #EEE;
+}
+.carousel img{
+    border-radius: 15px;
+}
+.carousel-cell {
+    margin-top: 5px;
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+    counter-increment: gallery-cell;
+}
+
+/* big previous & next buttons */
+.flickity-prev-next-button .arrow {
+    fill: rgba(255, 255, 255, 0);
+}
+.flickity-prev-next-button.no-svg {
+    color: rgba(255, 255, 255, 0);
+}
+
+@media screen and (max-width: 600px){
+    .carousel{
+        display: none;
+    }
+}
