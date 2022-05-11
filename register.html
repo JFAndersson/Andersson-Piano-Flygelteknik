@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Andersson Group - Logga in</title>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+        <link href="css/login.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+
+        <section class="imageSec">
+
+            <div class="background-filter"></div>
+    
+            <section class="loginContainer" id="registerContainer">
+    
+                <div class="register">
+
+                    <p id="registerHeader">Skapa konto</p>
+                    <p id="errorPhraseRegister">Placeholder</p>
+                
+                    <form id="registerForm" action="register.php" method="post" autocomplete="off">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                        </label>
+                        <input type="text" name="username" placeholder="Användarnamn" id="username" required>
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                        </label>
+                        <input type="password" name="password" placeholder="Lösenord" id="password" required>
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                        </label>
+                        <input type="email" name="email" placeholder="E-post" id="email" required>
+                        <input type="submit" value="Registrera">
+                    </form>
+                </div>
+        
+                <div class="btn-wrapper">
+                    <a class="button" id="btn1" href="index.php">Hem</a>
+                    <a class="button" href="login.html">Logga in</a>
+                </div>   
+        
+            </section>
+        </section>
+
+        <script src="js/callError.js"></script>  
+        <script>
+            document.getElementById("errorPhraseRegister").style.visibility = "hidden";
+        </script>
+	</body>
+</html>

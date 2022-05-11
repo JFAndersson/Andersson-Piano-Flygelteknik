@@ -1,3 +1,63 @@
+<?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+
+require 'vendor/autoload.php';
+
+// Output messages
+$responses = [];
+// Check if the form was submitted
+if (isset($_POST['email'], $_POST['subject'], $_POST['name'], $_POST['msg'])) {
+	// Validate email adress
+	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+		$responses[] = 'Email is not valid!';
+	}
+	// Make sure the form fields are not empty
+	if (empty($_POST['email']) || empty($_POST['subject']) || empty($_POST['name']) || empty($_POST['msg'])) {
+		$responses[] = 'Please complete all fields!';
+	} 
+	// If there are no errors
+	if (!$responses) {
+
+        //Create all arguments for a smtp connection
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPAuth = true;
+        $mail->Username = "jfasmtptest@gmail.com";
+        $mail->Password = '03JulfhaFhA03J';
+        $mail->Port = 465;
+        $mail->SMTPSecure = "ssl";
+
+        // Where to send the mail? It should be your email address
+		$to = 'jfasmtptest@gmail.com';
+
+        //The content inside the Email
+        $from    = $_POST['email'];
+        $subject = $_POST['subject'];
+        $message = $_POST['msg'];
+        $headers = 'Reply-To: ' . $from . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+             
+        $mail->isHTML(true);
+        $mail->setFrom($from);
+        $mail->addAddress($to);
+        $mail->Subject = ("$subject");
+        $mail->AddReplyTo($from, 'Kontakta mig');
+        $mail->Body = $message;
+		
+        // Try to send the mail
+		if ($mail->send()) {
+			// Success
+			$responses[] = 'Message sent!';		
+		} else {
+			// Fail
+			$responses[] = 'Message could not be sent! Please check your mail server settings!';
+		}
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,15 +78,15 @@
 
         <nav id="navbar">
 
-            <a href="index.html"><img id="logo" src="bilder/logotyp.png" alt="logotyp"></a>
+            <a href="index.php"><img id="logo" src="bilder/logotyp.png" alt="logotyp"></a>
 
             <ul class="nav-links" id="prenav-links">
-                <li><a id="nav_a" href="#headsec">Hem</a></li>
-                <li><a id="nav_a2" href="#prislista">Prislista</a></li>
-                <li><a id="nav_a3" href="#kontakta">Kontakta</a></li>
-                <li><a id="nav_a4" href="#skickbdm">Skickbedöma</a></li>
-                <li><a id="nav_a5" href="#om_mig">Om mig</a></li>
-                <li><a id="nav_a6" href="login.html">Logga in</a></li>
+                <li class="link"><a id="nav_a" href="#headsec">Hem</a></li>
+                <li class="link"><a id="nav_a2" href="#prislista">Prislista</a></li>
+                <li class="link"><a id="nav_a3" href="#kontakta">Kontakta</a></li>
+                <li class="link"><a id="nav_a4" href="#skickbdm">Skickbedöma</a></li>
+                <li class="link"><a id="nav_a5" href="#om_mig">Om mig</a></li>
+                <button id="loginBtn"><li><a id="nav_a6" href="login.html">Logga in</a></li></button>
             </ul>
 
             <div class="burger">
@@ -112,7 +172,7 @@
                             <td class="td-term pris">45</td>
                         </tr>
                         <tr>
-                            <td colspan="2" id="colspan-btn"><a href="#kontakta" class="kontakt-button" id="kontakt-button1">Kontakta</a></td>
+                            <td colspan="2" class="colspan-btn"><a href="#kontakta" class="kontakt-button" id="kontakt-button1">Kontakta</a></td>
                         </tr>
                     </table>   
                 </div>      
@@ -146,7 +206,7 @@
                             <td class="td-term pris">36</td>
                         </tr>
                         <tr>
-                            <td colspan="2" id="colspan-btn"><a href="#kontakta" class="kontakt-button">Kontakta</a></td>
+                            <td colspan="2" class="colspan-btn"><a href="#kontakta" class="kontakt-button">Kontakta</a></td>
                         </tr>
                     </table>   
                 </div>
@@ -156,7 +216,7 @@
 
         <section id="kontakta">
 
-            <div id="marginDivContact" style="margin-top: 70vh;"></div>
+            <div id="marginDivContact" style="margin-top: 85vh;"></div>
 
             <div id="contactTextHeader">
                 <h2>Kontakta</h2>
@@ -179,25 +239,37 @@
                     <ul class="punktlagd-lista">
                         <li class="span3"><span>Telefon:</span><span>0705-693344</span></li>
                         <li class="span3"><span>E-post:</span><span>Urbanpiano@telia.com</span></li>
-                        <li class="span3"><span>Adress:</span><span>Ögärdsvägen 4C, 51532 Viskafors</span></li>
+                        <li class="span3"><span>Adress:</span><span id="detailsAddress">Ögärdsvägen 4C, <br> 51532 Viskafors</span></li>
                     </ul>
                 </div>      
             </div>
 
             <div class="" id="form-parent">
                 <div id="form-container" class="table-align">
-                    <h1 style="font-size: 25px; padding-bottom: 10px;">Kontaktformulär</h1>
-                    <form action="/action_page.php">
-                        <label for="namn">Namn</label>
-                        <input type="text" id="fname" name="firstname" placeholder="Ditt namn...">
-                    
+
+                    <h1 style="font-size: 25px; padding-bottom: 10px;">Har du andra frågor? Skicka gärna ett meddelande!</h1>
+
+                    <form class="contact" method="post" action="">
+
                         <label for="email">E-post</label>
-                        <input type="text" id="fname" name="firstname" placeholder="Din e-postadress...">
+                        <input id="email" type="email" name="email" placeholder="Din e-postadress..." required>
+
+                        <label for="name">Namn</label>
+                        <input type="text" name="name" placeholder="Ditt namn..." required>
                     
                         <label for="subject">Ärende</label>
-                        <textarea id="fname" name="subject" placeholder="Ditt ärende..." style="height: 150px"></textarea>
-                    
-                        <div id="sendInput">Skicka</div>
+                        <input type="text" name="subject" placeholder="Ditt ärende..." required>
+
+                        <label for="message">Meddelande</label>
+                        <textarea name="msg" placeholder="Ditt meddelande..." style="height: 150px" required></textarea>
+
+                        <?php if ($responses): ?>
+                            <p class="responses"><?php echo implode('<br>', $responses); ?></p>
+                        <?php endif; ?>
+
+                        <div id="formSendContainer">
+                            <input type="submit" id="sendInput"></input>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -275,34 +347,6 @@
                 <div class="rep_image_container"  id="rep_image_container3"><img src="./bilder/Steinway.png" alt="5ar"></div>
 
             </div>
-
-
-            <!--
-            <div class="container-rep">
-            
-                <div class="repbox container-delar" class="repbox" id="repbox-1">          
-                    <a href="https://www.reco.se/andersson-piano-flygelteknik"><img src="./bilder/reco4år.png" alt="RECO" width="225px" height="auto"> </a>             
-                    <p>                                           
-                        Rekommenderat företag på Reco sedan år 2017
-                    </p>                             
-                </div>
-            
-                <div class="repbox container-delar" class="repbox" id="repbox-2">             
-                    <img src="./bilder/SPTF.jpg" alt="SPTF" width="225px" height="auto">
-                    <p>                                
-                        Auktoriserad medlem i SPTF - Sveriges Pianostämmare och Tekniker Förening
-                    </p>               
-                </div>
-
-                <div class="repbox container-delar" id="repbox-3">
-                    <img src="./bilder/Steinway.jpeg" alt="STEINWAY" width="225px" height="auto">                          
-                    <p>                                
-                        Tränad av Steinway
-                    </p>
-                </div>   
-                
-            </div>  
-            -->   
         </section>   
     
 
@@ -329,7 +373,6 @@
         <script src="js/animering.js"></script>  
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-
     </section>  
 </body>
 </html>

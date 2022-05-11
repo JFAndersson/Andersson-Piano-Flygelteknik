@@ -1,33 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/skrollning.css">
-
-    <title>Anderson Group - Logga in</title>
-</head>
-
-<body class="break">
-
-    <section id="loginContainer">
-
-        <div class="background-filter"></div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <div id="login_parent">
-            <h1>Logga in</h1>
-        
-        </div>
-
-        <div class="btn-wrapper">
-            <a class="button" id="btn1" href="index.html">Hem</a>
-            <a class="button" href="">Skapa konto</a>
-        </div>   
-
-
-    </section>
+        <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="css/skrollning.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     
-</body>
+        <title>Andersson Group - Logga in</title>
+    </head>
+    
+    <body>
+    
+        <section class="imageSec">
+            
+            <div class="background-filter"></div>
+    
+            <section class="loginContainer">
+    
+                <div class="login">
+
+                    <p id="loginHeader">Inloggning</p>
+                    <p id="errorPhraseLogin">Placeholder</p>
+                
+                    <form action="authenticate.php" method="post">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                        </label>
+                        <input type="text" name="username" placeholder="Användarnamn" id="username" required>
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                        </label>
+                        <input type="password" name="password" placeholder="Lösenord" id="password" required>
+                        <input type="submit" value="Logga in">
+                    </form>
+                </div>
+        
+                <div class="btn-wrapper">
+                    <a class="button" id="btn1" href="index.php">Hem</a>
+                    <a class="button" href="register.html">Skapa konto</a>
+                </div>   
+        
+            </section>
+        </section>
+    
+        <script src="js/callError.js"></script>  
+        <!--
+        <script>
+            document.getElementById("errorPhraseLogin").style.visibility = "hidden";
+        </script>
+        -->
+    </body>
 </html>

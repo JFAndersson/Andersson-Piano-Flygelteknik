@@ -1,11 +1,6 @@
 
 /* Navbarens skrollningsanimering */
 
-// Utförs endast vid förstagångsladdning av sidan
-if (document.body.scrollTop < 20){
-  Transparent();
-}
-
 function Transparent(){
   document.getElementById("nav_a").style.color = "rgba(1, 1, 1, 1)";
   document.getElementById("nav_a2").style.color = "rgba(1, 1, 1, 1)";
@@ -24,7 +19,7 @@ function Transparent(){
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction(){
-  if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {  
+  if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {  
     document.getElementById("nav_a").style.color = "rgba(255, 255, 255, 1)";
     document.getElementById("nav_a2").style.color = "rgba(255, 255, 255, 1)";
     document.getElementById("nav_a3").style.color = "rgba(255, 255, 255, 1)";
@@ -35,7 +30,14 @@ function scrollFunction(){
    
     document.getElementById("prenav-links").style.marginTop = "20px";
     document.getElementById("navbar").style.backgroundColor = "rgb(31, 31, 31)";
-    document.getElementById("navbar").style.padding = "15px 5px";
+    document.getElementById("logo").style.width = "200px";
+
+    if (window.innerWidth < 1000){
+      document.getElementById("navbar").style.padding = "15px 5px";
+    }
+    else{
+      document.getElementById("navbar").style.padding = "3px 5px";
+    }
   } 
   else{
     Transparent();
@@ -49,24 +51,35 @@ window.addEventListener('scroll', function(){
   let scale;
   let screenWidth = window.innerWidth;
 
+  let sizeKvot;
+  let opacityKvot;
+
   if (screenWidth > 1000){
     scale = 130;
+    sizeKvot = 12;
+    opacityKvot = 800;
   }
   else if (screenWidth > 740 && screenWidth < 1000){
     scale = 200;
+    sizeKvot = 9;
+    opacityKvot = 750;
   }
   else if (screenWidth > 500 && screenWidth < 740){
     scale = 300;
+    sizeKvot = 6;
+    opacityKvot = 700;
   }
   else{
     scale = 400;
+    sizeKvot = 3;
+    opacityKvot = 650;
   }
 
-  bg.style.backgroundSize =  scale + (+bg.style.width) + (window.pageYOffset/12) + '%';
-  bg.style.opacity = 1 - +window.pageYOffset / 800 + '';
+  bg.style.backgroundSize =  scale + (+bg.style.width) + (window.pageYOffset/sizeKvot) + '%';
+  bg.style.opacity = 1 - +window.pageYOffset / opacityKvot + '';
 })
 
-window.addEventListener('resize', function(){
+function setBackgroundSize(){
   let scale;
   let screenWidth = window.innerWidth;
 
@@ -84,6 +97,10 @@ window.addEventListener('resize', function(){
   }
 
   bg.style.backgroundSize =  scale + (+bg.style.width) + (window.pageYOffset/12) + '%';
+}
+
+window.addEventListener('resize', function(){
+  setBackgroundSize();
 })
 
 /* Hamburgeranimering */

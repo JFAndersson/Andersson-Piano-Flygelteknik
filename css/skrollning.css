@@ -11,6 +11,7 @@
     width: 30px;
     height: 30px;
     top: 80%;
+    margin-top: 3vh;
     margin-left: -18px;
     transform: rotate(45deg);
     border-left: none;
@@ -47,6 +48,7 @@
         width: 24px;
         height: 24px;
         margin-left: -17px;
+        margin-top: 5vh;
     }
 }
 
