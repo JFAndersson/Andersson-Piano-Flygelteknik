@@ -5,24 +5,24 @@ use PHPMailer\PHPMailer\SMTP;
 
 require 'vendor/autoload.php';
 
-// Output messages
+// Utskrift
 $responses = [];
-// Check if the form was submitted
+// Kollar så att formuläret skickades
 if (isset($_POST['email'], $_POST['subject'], $_POST['name'], $_POST['msg'])) {
-	// Validate email adress
+	// Validerar e-post addressen
 	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 		$responses[] = 'Email is not valid!';
 	}
-	// Make sure the form fields are not empty
+	// Ser till så att inmatningsrutorna inte är tomma
 	if (empty($_POST['email']) || empty($_POST['subject']) || empty($_POST['name']) || empty($_POST['msg'])) {
 		$responses[] = 'Please complete all fields!';
 	} 
-	// If there are no errors
+	// Om det inte är några error
 	if (!$responses) {
 
-        //Create all arguments for a smtp connection
         $mail = new PHPMailer(true);
         $mail->isSMTP();
+        $mail->CharSet = 'UTF-8';
         $mail->Host = "smtp.gmail.com";
         $mail->SMTPAuth = true;
         $mail->Username = "jfasmtptest@gmail.com";
@@ -30,10 +30,10 @@ if (isset($_POST['email'], $_POST['subject'], $_POST['name'], $_POST['msg'])) {
         $mail->Port = 465;
         $mail->SMTPSecure = "ssl";
 
-        // Where to send the mail? It should be your email address
+        // E-post addressen som kundens mail skickas till
 		$to = 'jfasmtptest@gmail.com';
 
-        //The content inside the Email
+        // E-mejlets innehåll
         $from    = $_POST['email'];
         $subject = $_POST['subject'];
         $message = $_POST['msg'];
@@ -46,13 +46,13 @@ if (isset($_POST['email'], $_POST['subject'], $_POST['name'], $_POST['msg'])) {
         $mail->AddReplyTo($from, 'Kontakta mig');
         $mail->Body = $message;
 		
-        // Try to send the mail
+        // Försöker skicka e-mejlet
 		if ($mail->send()) {
-			// Success
-			$responses[] = 'Message sent!';		
+			// Lyckas
+			$responses[] = 'Meddelandet skickades!';		
 		} else {
-			// Fail
-			$responses[] = 'Message could not be sent! Please check your mail server settings!';
+			// Misslyckas
+			$responses[] = 'Meddelandet kunde inte skickas!';
 		}
 	}
 }
@@ -102,11 +102,14 @@ if (isset($_POST['email'], $_POST['subject'], $_POST['name'], $_POST['msg'])) {
             <p id="slogan">"Bäst utbildning, högsta kvalité"</p>     
             
             <div class="btn-wrapper">
-                <a class="button" id="btn1" href="#prislista">Prislistan</a>
+                <a class="button" id="btn1" href="#prislista">Prislista</a>
                 <a class="button" href="#kontakta">Kontakta</a>
             </div>   
 
-            <div class="arrow"></div>            
+            <div id="arrowContainer">
+                <div class="arrow"></div>      
+            </div>
+
         </section>   
         
 
@@ -288,7 +291,7 @@ if (isset($_POST['email'], $_POST['subject'], $_POST['name'], $_POST['msg'])) {
                 <div class="k_viewbox">
                     <h1>Hur bedöms ett begagnat piano?</h1>
                     <p>
-                        Följande filmer från YouTube beskriver tydligt vad du ska titta efter när du köper ett begagnat piano. 
+                        Följande bilder visar tydligt vad du ska titta efter när du köper ett begagnat piano. 
                         När du sedan har valt ut ett piano är det bäst att avtala en tid med din auktoriserade pianotekniker, som 
                         sedan gör en fackmässig inspektion. 
                         <span><a href="https://youtu.be/1TqTIroFaac">Helst ska ett begagnat piano se ut så här:</a></span>

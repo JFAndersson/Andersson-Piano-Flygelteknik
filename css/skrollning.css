@@ -1,18 +1,20 @@
 
 /* Skrollningssymbol */
 
-.arrow,
-.arrow:before{
-    position: absolute;
-    left: 50%;
+#arrowContainer{
+    margin-top: 100px;
+    margin-bottom: -150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 .arrow{
-    display: flex;
     width: 30px;
     height: 30px;
     top: 80%;
     margin-top: 3vh;
-    margin-left: -18px;
+
     transform: rotate(45deg);
     border-left: none;
     border-top: none;
@@ -20,10 +22,12 @@
     border-bottom: 2px #fff solid;
 }
 .arrow:before{
+    position: absolute;
     content: '';
     width: 20px;
     height: 20px;
     top: 50%;
+    left: 50%;
     
     border-left: none;
     border-top: none;
@@ -44,6 +48,11 @@
     }
 }
 @media screen and (max-width: 1000px){
+    #arrowContainer{
+        margin-top: 40px;
+        margin-bottom: -170px;
+        margin-left: 15px;
+    }
     .arrow{
         width: 24px;
         height: 24px;
@@ -53,10 +62,14 @@
 }
 
 @media screen and (max-width: 500px){
+    #arrowContainer{
+        margin-top: 20px;
+        margin-bottom: -120px;
+        margin-left: 15px;
+    }
     .arrow{
         width: 20px;
         height: 20px;
-        margin-left: -16px;
     }
 }
 

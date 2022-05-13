@@ -1,7 +1,7 @@
 <?php
-// We need to use sessions, so you should always start sessions using the below code.
+// Använder sessions för att bekräfta om användaren har loggat in
 session_start();
-// If the user is not logged in redirect to the login page...
+// Är användaren inte inloggad skickas hen till hemskärmen
 if (!isset($_SESSION['loggedin'])) {
 	header('Location: index.php');
 	exit;
@@ -22,7 +22,6 @@ if (!isset($_SESSION['loggedin'])) {
 				<h1>Andersson Group</h1>
 				<a href="profile.php"><i class="fas fa-user-circle"></i>Profil</a>
 				<a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logga ut</a>
-			
 			</div>
 		</nav>
 		<div class="content">

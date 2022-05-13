@@ -1,7 +1,9 @@
 <?php
-// We need to use sessions, so you should always start sessions using the below code.
+
+// Använder sessions för att bekräfta om användaren har loggat in
 session_start();
-// If the user is not logged in redirect to the login page...
+
+// Är användaren inte inloggad skickas hen till hemskärmen
 if (!isset($_SESSION['loggedin'])) {
 	header('Location: index.php');
 	exit;
@@ -15,9 +17,10 @@ $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_
 if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
-// We don't have the password or email info stored in sessions so instead we can get the results from the database.
+// Man har inte lösenord och e-post lagrad i sessions så dessa behöver hämtas från databasen
 $stmt = $con->prepare('SELECT password, email FROM accounts WHERE id = ?');
-// In this case we can use the account ID to get the account info.
+
+// I det här sammanhanget kan vi använda konto IDt för att hämta konto infon.
 $stmt->bind_param('i', $_SESSION['id']);
 $stmt->execute();
 $stmt->bind_result($password, $email);
@@ -42,23 +45,31 @@ $stmt->close();
 			</div>
 		</nav>
 		<div class="content">
+
 			<h2>Kontouppgifter</h2>
+
 			<div class="textBox">
-				<p id="detailsHeader">Nedan hittar du dina kontouppgifter:</p>
-				<table>
-					<tr>
-						<td>Användarnamn:</td>
-						<td><?=$_SESSION['name']?></td>
-					</tr>
-					<tr>
-						<td>Lösenord:</td>
-						<td><?=$password?></td>
-					</tr>
-					<tr>
-						<td>E-post:</td>
-						<td><?=$email?></td>
-					</tr>
-				</table>
+
+				<div id="accountContainer">
+
+					<p id="detailsHeader">Nedan hittar du dina kontouppgifter:</p>
+					
+					<table>
+						<tr>
+							<td>Användarnamn:</td>
+							<td><?=$_SESSION['name']?></td>
+						</tr>
+						<tr>
+							<td>Lösenord:</td>
+							<td><?=$password?></td>
+						</tr>
+						<tr>
+							<td>E-post:</td>
+							<td><?=$email?></td>
+						</tr>
+					</table>
+				</div>
+				<a id="showPassBtn">Visa lösenord</a>
 			</div>
 		</div>
 	</body>

@@ -1,6 +1,6 @@
 <?php
 session_start();
 session_destroy();
-// Redirect to the login page:
+// Skickar användaren tillbaka till startsidan
 header('Location: index.php');
 ?>
